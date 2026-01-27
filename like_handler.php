@@ -6,7 +6,6 @@ if (isset($_GET['post_id']) && isset($_SESSION['user_id'])) {
     $post_id = $_GET['post_id'];
     $user_id = $_SESSION['user_id'];
 
-    // Toggle logic: If like exists, delete it. If not, add it.
     $check = $pdo->prepare("SELECT * FROM likes WHERE post_id = ? AND user_id = ?");
     $check->execute([$post_id, $user_id]);
 

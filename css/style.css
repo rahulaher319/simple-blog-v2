@@ -1,8 +1,6 @@
-/* General Reset */
 * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 body { margin: 0; padding: 0; background-color: #f4f7f6; transition: background 0.3s; }
 
-/* --- AUTH PAGES (Login/Register/Forgot Password) --- */
 .auth-body {
     background: linear-gradient(45deg, #00dbde 0%, #fc00ff 100%);
     height: 100vh;
@@ -23,7 +21,6 @@ body { margin: 0; padding: 0; background-color: #f4f7f6; transition: background 
 
 .auth-card h2 { margin-bottom: 30px; color: #333; font-size: 28px; }
 
-/* Auth Input & Select Styling */
 .auth-card input, .auth-card select {
     width: 100%;
     padding: 12px;
@@ -34,9 +31,9 @@ body { margin: 0; padding: 0; background-color: #f4f7f6; transition: background 
     transition: 0.3s;
     background: transparent;
 }
+
 .auth-card input:focus { border-bottom: 2px solid #fc00ff; }
 
-/* Auth Button Specific Styling */
 .auth-card button {
     width: 100%;
     padding: 12px;
@@ -50,9 +47,9 @@ body { margin: 0; padding: 0; background-color: #f4f7f6; transition: background 
     margin-top: 15px;
     transition: opacity 0.3s;
 }
+
 .auth-card button:hover { opacity: 0.9; }
 
-/* --- GLOBAL BUTTON STYLE (For Feed/Dashboard) --- */
 .button {
     padding: 10px 20px;
     background: #3498db;
@@ -65,9 +62,9 @@ body { margin: 0; padding: 0; background-color: #f4f7f6; transition: background 
     display: inline-block;
     transition: 0.3s ease;
 }
+
 .button:hover { background: #2980b9; transform: translateY(-1px); }
 
-/* --- PROFILE & DASHBOARD CARDS --- */
 .profile-card, .form-card, .stat-card {
     background: white;
     padding: 30px;
@@ -84,7 +81,6 @@ body { margin: 0; padding: 0; background-color: #f4f7f6; transition: background 
     margin-bottom: 15px;
 }
 
-/* --- HORIZONTAL POST CARDS (Home Feed) --- */
 .post-card { 
     background: white; 
     border-radius: 12px; 
@@ -94,11 +90,11 @@ body { margin: 0; padding: 0; background-color: #f4f7f6; transition: background 
     overflow: hidden; 
     min-height: 250px;
 }
+
 .post-info-side { flex: 1; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; }
 .post-image-side { flex: 0 0 300px; background: #f8f9fa; border-left: 1px solid #eee; }
 .post-featured-image { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* --- FULL VIEW & USER PROFILE FIX (Stack Vertically) --- */
 .full-post-view { 
     display: block !important; 
     min-height: auto !important;
@@ -121,7 +117,6 @@ body { margin: 0; padding: 0; background-color: #f4f7f6; transition: background 
     object-fit: contain;
 }
 
-/* --- LIKED_POSTS.PHP FIX (Align Side-by-Side) --- */
 .liked-post-card { 
     background: white; 
     padding: 20px 30px; 
@@ -134,13 +129,11 @@ body { margin: 0; padding: 0; background-color: #f4f7f6; transition: background 
     min-height: auto; 
 }
 
-/* --- CREATOR STUDIO TABLE --- */
 .post-table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; margin-top: 20px; }
 .post-table th, .post-table td { padding: 15px 20px; text-align: left; border-bottom: 1px solid #eee; }
 .post-table th { background-color: #f8f9fa; color: #2c3e50; font-size: 13px; text-transform: uppercase; }
 .dash-thumb { width: 60px; height: 45px; object-fit: cover; border-radius: 6px; }
 
-/* --- DARK MODE SUPPORT --- */
 body.dark-mode { background-color: #1a1a1a; color: #ecf0f1; }
 body.dark-mode .post-card, 
 body.dark-mode .profile-card, 
@@ -151,6 +144,7 @@ body.dark-mode .post-table {
     color: white; 
     border: 1px solid #444; 
 }
+
 body.dark-mode .post-table th { background-color: #3d3d3d; color: white; }
 body.dark-mode .post-image-side, body.dark-mode .view-post-image-container { background: #1a1a1a; border: 1px solid #444; }
 body.dark-mode input, body.dark-mode textarea, body.dark-mode select { 
@@ -161,13 +155,13 @@ body.dark-mode input, body.dark-mode textarea, body.dark-mode select {
 
 .blog-header {
   display: flex;
-  align-items: center; /* Vertically centers logo with text */
-  gap: 15px;           /* Adds space between logo and title */
+  align-items: center;
+  gap: 15px;
   margin-bottom: 20px;
 }
 
 .community-logo {
-  height: 40px;        /* Adjust size based on your header height */
+  height: 40px;
   width: auto;
   object-fit: contain;
 }

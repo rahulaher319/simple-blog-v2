@@ -2,24 +2,19 @@
 require '../includes/db.php';
 session_start();
 
-// 1. Process the login only if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // 2. Fetch the user from the database
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch();
 
-    // 3. Validate credentials and verification status
     if ($user && password_verify($password, $user['password'])) {
         if ($user['is_verified'] == 1) {
-            // Success! Store user info in the session
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['name'] = $user['name'];
 
-            // 4. Redirect to the Home Page (index.php is one level up)
             header("Location: ../index.php");
             exit();
         } else {

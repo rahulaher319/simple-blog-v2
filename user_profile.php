@@ -2,7 +2,6 @@
 require 'includes/db.php';
 session_start();
 
-// Get the ID of the person whose profile we want to see
 $view_user_id = $_GET['id'] ?? null;
 
 if (!$view_user_id) {
@@ -10,14 +9,12 @@ if (!$view_user_id) {
     exit();
 }
 
-// 1. Fetch the User's public info (Profile pic, name, bio, and join date)
 $stmt = $pdo->prepare("SELECT name, bio, created_at, profile_pic FROM users WHERE user_id = ?");
 $stmt->execute([$view_user_id]);
 $view_user = $stmt->fetch();
 
 if (!$view_user) { die("User not found."); }
 
-// 2. Fetch all posts written by this specific user
 $postStmt = $pdo->prepare("SELECT * FROM posts WHERE user_id = ? ORDER BY created_at DESC");
 $postStmt->execute([$view_user_id]);
 $user_posts = $postStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -31,7 +28,6 @@ $user_posts = $postStmt->fetchAll(PDO::FETCH_ASSOC);
     <style>
         .main-content { margin-left: 250px; padding: 40px; }
         
-        /* Profile Header Styling */
         .profile-header { 
             background: white; 
             padding: 40px; 
@@ -60,7 +56,6 @@ $user_posts = $postStmt->fetchAll(PDO::FETCH_ASSOC);
             line-height: 1.6;
         }
 
-        /* Spacing for the vertical post list */
         .profile-post-card { 
             margin-bottom: 20px; 
         }

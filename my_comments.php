@@ -9,7 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch user's comments and the title of the post they commented on
 $query = "SELECT comments.*, posts.title AS post_title 
           FROM comments 
           JOIN posts ON comments.post_id = posts.post_id 

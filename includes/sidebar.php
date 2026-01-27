@@ -1,5 +1,5 @@
 <?php
-// Fetch current user info if logged in to display in sidebar
+
 if (isset($_SESSION['user_id'])) {
     $sidebar_user_id = $_SESSION['user_id'];
     $sideStmt = $pdo->prepare("SELECT name, profile_pic FROM users WHERE user_id = ?");
@@ -48,7 +48,7 @@ if (isset($_SESSION['user_id'])) {
 </div>
 
 <style>
-/* New Category Labels */
+
 .nav-label {
     padding: 20px 25px 5px 25px;
     font-size: 11px;
@@ -77,7 +77,6 @@ if (isset($_SESSION['user_id'])) {
     color: #bdc3c7;
 }
 
-/* Sidebar Container */
 .sidebar {
     width: 250px; 
     height: 100vh; 
@@ -141,7 +140,6 @@ if (isset($_SESSION['user_id'])) {
     font-weight: bold;
 }
 
-/* Dark Mode Extensions */
 body.dark-mode { background-color: #1a1a1a !important; color: white; }
 body.dark-mode .post-card, body.dark-mode .auth-card { background-color: #2d2d2d; color: white; border: 1px solid #444; }
 body.dark-mode .sidebar-search input { background: #1a1a1a; border: 1px solid #444; }

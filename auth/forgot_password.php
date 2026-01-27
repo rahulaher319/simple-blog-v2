@@ -1,5 +1,3 @@
-
-
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -8,6 +6,7 @@ require '../includes/db.php';
 require '../includes/PHPMailer/src/Exception.php';
 require '../includes/PHPMailer/src/PHPMailer.php';
 require '../includes/PHPMailer/src/SMTP.php';
+require '../includes/config.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -27,15 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $mail = new PHPMailer(true);
         try {
-            // --- DEBUG MODE: This will show us the real error ---
             $mail->SMTPDebug = 0; 
             
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'rahul.aher0223@gmail.com'; 
-            $mail->Password   = 'fsdqjieezgvctvmc'; // REMOVE SPACES HERE
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Specifically use this constant
+            $mail->Username   = MAIL_USER; 
+            $mail->Password   = MAIL_PASS; 
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
             $mail->Port       = 587;
 
             $mail->SMTPOptions = array(
@@ -46,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 )
             );
 
-            $mail->setFrom('rahul.aher0223@gmail.com', 'Social Blog');
+            $mail->setFrom(MAIL_USER, 'Social Blog');
             $mail->addAddress($email);
             $mail->isHTML(true);
             $mail->Subject = 'Reset Your Password';
@@ -55,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->send();
             $success = "Check your email for the reset link!";
         } catch (Exception $e) { 
-            // This now shows the detailed PHPMailer error
             $error = "Email failed. Technical Info: " . $mail->ErrorInfo; 
         }
     } else { $error = "No user found with that email."; }

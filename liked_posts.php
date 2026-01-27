@@ -9,7 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch posts that the user has liked
 $query = "SELECT posts.*, users.name AS author 
           FROM likes 
           JOIN posts ON likes.post_id = posts.post_id 
@@ -29,7 +28,6 @@ $liked_posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <style>
         .main-content { margin-left: 250px; padding: 40px; }
         
-        /* Specific override for the Liked Posts list to fix overlapping */
         .liked-post-card { 
             background: white; 
             padding: 20px 30px; 
@@ -39,7 +37,7 @@ $liked_posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            min-height: auto; /* Fixes the massive height issue */
+            min-height: auto; 
         }
 
         .liked-post-info h3 { margin: 0; color: #2c3e50; font-size: 1.2em; }

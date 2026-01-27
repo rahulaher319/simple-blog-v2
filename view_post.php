@@ -10,24 +10,20 @@ if (!isset($_GET['id'])) {
 $post_id = $_GET['id'];
 $user_id = $_SESSION['user_id'] ?? null;
 
-// 1. Fetch Post Details
 $stmt = $pdo->prepare("SELECT posts.*, users.name FROM posts JOIN users ON posts.user_id = users.user_id WHERE post_id = ?");
 $stmt->execute([$post_id]);
 $post = $stmt->fetch();
 
 if (!$post) { die("Post not found."); }
 
-// 2. Fetch Comments
 $comStmt = $pdo->prepare("SELECT comments.*, users.name, users.profile_pic FROM comments JOIN users ON comments.user_id = users.user_id WHERE post_id = ? ORDER BY created_at DESC");
 $comStmt->execute([$post_id]);
 $comments = $comStmt->fetchAll(PDO::FETCH_ASSOC);
 
-// 3. Fetch Like Count
 $likeStmt = $pdo->prepare("SELECT COUNT(*) FROM likes WHERE post_id = ?");
 $likeStmt->execute([$post_id]);
 $like_count = $likeStmt->fetchColumn();
 
-// 4. Check if current user liked this post
 $userLiked = false;
 if ($user_id) {
     $checkLike = $pdo->prepare("SELECT * FROM likes WHERE post_id = ? AND user_id = ?");
@@ -44,7 +40,6 @@ if ($user_id) {
     <style>
         .main-content { margin-left: 250px; padding: 40px; transition: 0.3s; }
         
-        /* OVERRIDE for full view: Stack vertically instead of flex horizontal */
         .full-post-view { 
             display: block !important; 
             min-height: auto !important;

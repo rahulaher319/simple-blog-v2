@@ -13,13 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_SESSION['user_id'];
     $post_image = null; 
 
-    // Handle Optional Image Upload
     if (isset($_FILES['post_image']) && $_FILES['post_image']['error'] == 0) {
         $allowed = ['jpg', 'jpeg', 'png', 'gif'];
         $ext = strtolower(pathinfo($_FILES['post_image']['name'], PATHINFO_EXTENSION));
 
         if (in_array($ext, $allowed)) {
-            // Ensure the directory exists before moving the file
             $target_dir = "uploads/post_images/";
             if (!is_dir($target_dir)) {
                 mkdir($target_dir, 0777, true);

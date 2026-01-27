@@ -4,7 +4,6 @@ session_start();
 
 $query_term = $_GET['query'] ?? '';
 
-// Fetch search results with author details and counts
 $stmt = $pdo->prepare("SELECT 
             posts.*, 
             users.name AS author,
@@ -27,7 +26,6 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="css/style.css">
     <style>
         .main-content { margin-left: 250px; padding: 40px; min-height: 100vh; }
-        /* Reusing global styles for consistency */
         .search-meta { display: flex; align-items: center; margin-bottom: 12px; }
         .feed-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 10px; }
     </style>

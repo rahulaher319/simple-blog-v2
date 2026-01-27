@@ -2,7 +2,6 @@
 require 'includes/db.php';
 session_start();
 
-// Redirect if not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: auth/login.php");
     exit();
@@ -16,18 +15,15 @@ if (!$post_id) {
     exit();
 }
 
-// 1. Fetch the existing post data
 $stmt = $pdo->prepare("SELECT * FROM posts WHERE post_id = ? AND user_id = ?");
 $stmt->execute([$post_id, $user_id]);
 $post = $stmt->fetch();
 
-// If post doesn't exist or doesn't belong to user, kick them out
 if (!$post) {
     header("Location: dashboard.php");
     exit();
 }
 
-// 2. Handle the Update request
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = $_POST['title'];
     $content = $_POST['content'];

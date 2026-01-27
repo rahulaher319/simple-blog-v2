@@ -1,5 +1,5 @@
 <?php
-// includes/functions.php
+
 session_start();
 
 function requireLogin() {

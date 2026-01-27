@@ -1,7 +1,4 @@
-
-
 <?php
-// Import PHPMailer classes into the global namespace
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -9,6 +6,7 @@ require '../includes/db.php';
 require '../includes/PHPMailer/src/Exception.php';
 require '../includes/PHPMailer/src/PHPMailer.php';
 require '../includes/PHPMailer/src/SMTP.php';
+require '../includes/config.php';
 
 session_start();
 
@@ -17,26 +15,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     
-    // Capture new fields
     $birthdate = $_POST['birthdate'];
     $gender = $_POST['gender'];
     
-    // Generate 6-digit OTP
     $otp = rand(100000, 999999);
 
     try {
-        // 1. Insert user into database including birthdate and gender
         $stmt = $pdo->prepare("INSERT INTO users (name, email, password, birthdate, gender, is_verified) VALUES (?, ?, ?, ?, ?, 0)");
         $stmt->execute([$name, $email, $password, $birthdate, $gender]);
 
-        // 2. Configure PHPMailer to send the OTP
         $mail = new PHPMailer(true);
         
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'rahul.aher0223@gmail.com'; 
-        $mail->Password   = 'fsdqjieezgvctvmc'; // Application password here
+        $mail->Username   = MAIL_USER; 
+        $mail->Password   = MAIL_PASS; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
@@ -48,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             )
         );
 
-        $mail->setFrom('rahul.aher0223@gmail.com', 'Social Blog');
+        $mail->setFrom(MAIL_USER, 'Social Blog');
         $mail->addAddress($email);
         $mail->isHTML(true);
         $mail->Subject = 'Verify your Social Blog Account';
@@ -74,7 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Register | Social Blog</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        /* Ensuring select box matches input styling */
         .auth-card select {
             width: 100%;
             padding: 12px;

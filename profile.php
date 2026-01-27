@@ -10,21 +10,18 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $message = "";
 
-// 1. Fetch user data including profile_pic, birthdate, and gender
 $stmt = $pdo->prepare("SELECT name, email, created_at, bio, profile_pic, birthdate, gender FROM users WHERE user_id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
-// 2. Handle the update request
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $new_name = trim($_POST['name']);
     $new_email = trim($_POST['email']);
     $new_bio = trim($_POST['bio']);
-    $new_birthdate = $_POST['birthdate']; // Capture birthdate
-    $new_gender = $_POST['gender'];       // Capture gender
+    $new_birthdate = $_POST['birthdate']; 
+    $new_gender = $_POST['gender'];       
     $profile_pic = $user['profile_pic']; 
 
-    // Handle File Upload
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
         $allowed = ['jpg', 'jpeg', 'png', 'gif'];
         $filename = $_FILES['profile_image']['name'];
@@ -45,13 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (!empty($new_name) && !empty($new_email)) {
-        // Update all fields including birthdate and gender
         $updateStmt = $pdo->prepare("UPDATE users SET name = ?, email = ?, bio = ?, profile_pic = ?, birthdate = ?, gender = ? WHERE user_id = ?");
         if ($updateStmt->execute([$new_name, $new_email, $new_bio, $profile_pic, $new_birthdate, $new_gender, $user_id])) {
             $_SESSION['user_name'] = $new_name; 
             $message = "Profile updated successfully!";
             
-            // Refresh local data for display
             $user['name'] = $new_name;
             $user['email'] = $new_email;
             $user['bio'] = $new_bio;

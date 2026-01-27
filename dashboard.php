@@ -9,7 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// 1. Fetch posts including the post_image column
 $query = "SELECT posts.*, 
           (SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.post_id) AS like_count,
           (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.post_id) AS comment_count
@@ -18,7 +17,6 @@ $stmt = $pdo->prepare($query);
 $stmt->execute([$user_id]);
 $my_posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Calculate Totals for the Stats Row
 $total_likes = array_sum(array_column($my_posts, 'like_count'));
 $total_comments = array_sum(array_column($my_posts, 'comment_count'));
 ?>
@@ -31,7 +29,6 @@ $total_comments = array_sum(array_column($my_posts, 'comment_count'));
     <style>
         .main-content { margin-left: 250px; padding: 40px; transition: 0.3s; }
         
-        /* Stats Cards Styling */
         .stat-card {
             padding: 20px;
             border-radius: 12px;
@@ -41,7 +38,6 @@ $total_comments = array_sum(array_column($my_posts, 'comment_count'));
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* Dashboard Table Styling */
         .post-table {
             width: 100%;
             border-collapse: collapse;
@@ -59,7 +55,6 @@ $total_comments = array_sum(array_column($my_posts, 'comment_count'));
             vertical-align: middle;
         }
         
-        /* Thumbnail Style */
         .dash-thumb {
             width: 60px;
             height: 45px;
@@ -73,7 +68,6 @@ $total_comments = array_sum(array_column($my_posts, 'comment_count'));
         .btn-edit { color: #3498db; text-decoration: none; margin-right: 15px; font-weight: bold; }
         .btn-delete { color: #e74c3c; text-decoration: none; font-weight: bold; }
         
-        /* Dark Mode Adjustments */
         body.dark-mode .post-table { background: #2d2d2d; color: white; }
         body.dark-mode .post-table th { background: #3d3d3d; color: white; border-bottom: 1px solid #444; }
         body.dark-mode .post-table td { border-bottom: 1px solid #444; }

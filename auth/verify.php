@@ -8,7 +8,6 @@ if (!isset($_SESSION['temp_email'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Combine the 6 inputs into one string
     $user_otp = implode('', $_POST['otp']);
     
     if ($user_otp == $_SESSION['otp']) {
@@ -51,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <script>
-        // Auto-focus next box logic
         const inputs = document.querySelectorAll('.otp-input');
         inputs.forEach((input, index) => {
             input.addEventListener('input', () => {
