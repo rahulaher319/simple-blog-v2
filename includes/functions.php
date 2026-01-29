@@ -15,4 +15,8 @@ function requireVerification() {
         exit();
     }
 }
+
+function e($data) {
+    return htmlspecialchars($birthdate ?? $data, ENT_QUOTES, 'UTF-8');
+}
 ?>

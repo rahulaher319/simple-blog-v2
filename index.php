@@ -1,5 +1,6 @@
 <?php
 require 'includes/db.php';
+require 'includes/functions.php'; 
 session_start();
 
 $query = "SELECT 
@@ -22,15 +23,7 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="css/style.css">
     <style>
         .main-content { margin-left: 250px; padding: 40px; min-height: 100vh; transition: 0.3s; }
-        .post-card { 
-            background: white; 
-            border-radius: 12px; 
-            margin-bottom: 25px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            display: flex; 
-            overflow: hidden; 
-            min-height: 250px;
-        }
+        .post-card { background: white; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; overflow: hidden; min-height: 250px; }
         .post-info-side { flex: 1; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; }
         .post-image-side { flex: 0 0 300px; background: #f8f9fa; border-left: 1px solid #eee; }
         .post-featured-image { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -69,19 +62,19 @@ if (isset($_SESSION['user_id'])) {
             <div class="post-card">
                 <div class="post-info-side">
                     <div>
-                        <h2 style="margin-top:0; color:#2c3e50; font-size: 1.5em;"><?php echo htmlspecialchars($post['title']); ?></h2>
+                        <h2 style="margin-top:0; color:#2c3e50; font-size: 1.5em;"><?php echo e($post['title']); ?></h2>
                         <div class="post-meta">
-                            <img src="uploads/profile_pics/<?php echo htmlspecialchars($post['profile_pic'] ?? 'default.png'); ?>" class="feed-avatar">
+                            <img src="uploads/profile_pics/<?php echo e($post['profile_pic'] ?? 'default.png'); ?>" class="feed-avatar">
                             <p style="color:#7f8c8d; font-size:0.85em; margin: 0;">
                                 Posted by 
                                 <a href="user_profile.php?id=<?php echo $post['user_id']; ?>" class="author-link">
-                                    <?php echo htmlspecialchars($post['author']); ?>
+                                    <?php echo e($post['author']); ?>
                                 </a> 
-                                on <?php echo date('M d, Y', strtotime($post['created_at'])); ?> at <?php echo date('g:i A', strtotime($post['created_at'])); ?>
+                                on <?php echo date('M d, Y', strtotime($post['created_at'])); ?>
                             </p>
                         </div>
                         <p style="line-height:1.5; font-size: 0.95em;">
-                            <?php echo nl2br(htmlspecialchars(substr($post['content'], 0, 180))); ?>...
+                            <?php echo nl2br(e(substr($post['content'], 0, 180))); ?>...
                         </p>
                     </div>
                     <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
@@ -95,12 +88,11 @@ if (isset($_SESSION['user_id'])) {
 
                 <?php if (!empty($post['post_image'])): ?>
                     <div class="post-image-side">
-                        <img src="uploads/post_images/<?php echo htmlspecialchars($post['post_image']); ?>" class="post-featured-image">
+                        <img src="uploads/post_images/<?php echo e($post['post_image']); ?>" class="post-featured-image">
                     </div>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
-
 </div> </body>
 </html>
