@@ -1,8 +1,8 @@
 <?php
 require 'includes/db.php';
 require 'includes/functions.php'; 
-session_start();
 
+// Fetch posts
 $query = "SELECT 
             posts.*, 
             users.name AS author,
@@ -22,7 +22,12 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Social Blog | Home</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
+        /* Shared layout class ensures consistency for guests and users */
         .main-content { margin-left: 250px; padding: 40px; min-height: 100vh; transition: 0.3s; }
+        
+        /* Adjust margin if sidebar is missing (for guests) */
+        .guest-mode { margin-left: 0; padding-top: 20px; }
+
         .post-card { background: white; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; overflow: hidden; min-height: 250px; }
         .post-info-side { flex: 1; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; }
         .post-image-side { flex: 0 0 300px; background: #f8f9fa; border-left: 1px solid #eee; }
@@ -33,6 +38,7 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         body.dark-mode .post-card h2 { color: #fff !important; }
         body.dark-mode .post-card p { color: #ccc !important; }
         .author-link { color: #3498db; text-decoration: none; font-weight: bold; }
+        .guest-header { text-align: center; margin-bottom: 30px; }
     </style>
 </head>
 <body>
@@ -42,13 +48,15 @@ if (isset($_SESSION['user_id'])) {
     include 'includes/sidebar.php'; 
     echo '<div class="main-content">';
 } else {
-    echo '<div class="guest-container" style="text-align:center; padding:40px;">';
-    echo '<a href="auth/login.php" class="button">Login</a>';
+    // Apply main-content for structure, but add guest-mode to remove the sidebar margin
+    echo '<div class="main-content guest-mode">';
+    echo '<div class="guest-header">';
+    echo '<a href="auth/login.php" class="button">Login to Post</a>';
     echo '</div>';
 }
 ?>
 
-    <div class="blog-header">
+    <div class="blog-header" style="text-align: center;">
         <img src="SS_Logo.jpeg" alt="S Logo" class="community-logo">
         <h1>Simple Blog</h1>
     </div>
@@ -94,5 +102,6 @@ if (isset($_SESSION['user_id'])) {
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
+
 </div> </body>
 </html>
